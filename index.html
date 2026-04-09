@@ -876,5 +876,48 @@ function initCharts() {
   }, 200);
 }
 </script>
+  <!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIJaN7R2_fAxihCjJtBrgiBBHf6y6eahI",
+    authDomain: "cesaju.firebaseapp.com",
+    projectId: "cesaju",
+    storageBucket: "cesaju.firebasestorage.app",
+    messagingSenderId: "739740028105",
+    appId: "1:739740028105:web:32d11d3066ce064622d118",
+    measurementId: "G-XEX0T4LHX8"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // LOGIN SIMPLES
+  window.loginFirebase = async function(email, senha) {
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, senha);
+      alert("Login realizado!");
+      console.log(user);
+    } catch (error) {
+      alert("Erro no login");
+      console.error(error);
+    }
+  }
+
+  // SALVAR DADOS
+  window.salvarAtendimento = async function(dados) {
+    try {
+      await addDoc(collection(db, "atendimentos"), dados);
+      alert("Salvo com sucesso!");
+    } catch (e) {
+      alert("Erro ao salvar");
+      console.error(e);
+    }
+  }
+</script>
 </body>
 </html>
